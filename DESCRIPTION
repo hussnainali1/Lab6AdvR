@@ -1,15 +1,19 @@
 Package: Lab6AdvR
-Title: What the Package Does (One Line, Title Case)
+Title: Knapsack Prblem Solution
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+Authors@R: c( person("hussnain", "ali", , "hussnainkhilgi1@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID")), 
+            person("Atta", "Khan", , "attaullahkhan.comsats@gmail.com", role = "ctb",
            comment = c(ORCID = "YOUR-ORCID-ID"))
+           )
 Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
+LazyData: true
