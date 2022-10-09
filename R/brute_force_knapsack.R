@@ -14,6 +14,8 @@
 brute_force_knapsack <-function(x, W){
     stopifnot(is.data.frame(x))
     stopifnot(is.numeric(W))
+    stopifnot(W>0)
+
     n <- length(x$v)
     Weights <- x$w
     Values <- x$v
@@ -42,7 +44,7 @@ brute_force_knapsack <-function(x, W){
       }
     }
     nodes <- which(nodes==1,  arr.ind = TRUE)
-    return (list("value"=finalValue, "output"=nodes))
+    return (list("value"=finalValue, "elements"=nodes))
   }
 
 

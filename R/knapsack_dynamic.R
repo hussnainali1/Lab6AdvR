@@ -15,6 +15,7 @@
 dynamic_knapsack <- function(x,W){
   stopifnot(is.data.frame(x))
   stopifnot(is.numeric(W))
+  stopifnot(W>0)
 
   n <- length(x$w)
   matrixx <- matrix(nrow = n, ncol = W)
@@ -54,4 +55,7 @@ dynamic_knapsack <- function(x,W){
   finalresult <- list("value" = matrixx[n, W], "elements" = finalElement)
   return(finalresult)
 }
+
+
+# dynamic_knapsack(x = knapsack_objects[1:8,], W = 3500)
 

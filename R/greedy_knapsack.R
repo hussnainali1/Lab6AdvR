@@ -1,4 +1,3 @@
-
 #' greedy_knapsack
 #'
 #' @param x A DataFrame
@@ -14,6 +13,8 @@
 greedy_knapsack <- function(x, W){
   stopifnot(is.data.frame(x))
   stopifnot(is.numeric(W))
+  stopifnot(W>0)
+
   tempDataFrame <- x
   objW <- x$w
   objv <- x$v
@@ -37,18 +38,14 @@ greedy_knapsack <- function(x, W){
     }
 
   }
+  if(length(itemVector)>4){
     summ <- summ - tempSumm
     itemVector <- itemVector[1:length(itemVector)-1]
+  }
+
   return(list("value"= summ, "elements"= itemVector))
 }
-
-# RNGversion(min(as.character(getRversion()),"3.5.3"))
-# set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
-# n <- 2000
-# knapsack_objects <-
-#   data.frame(
-#     w=sample(1:4000, size = n, replace = TRUE),
-#     v=runif(n = n, 0, 10000)
-#   )
-
-
+# greedy_knapsack(x = knapsack_objects[1:12,], W = 3500)
+# greedy_knapsack(x = knapsack_objects[1:8,], W = 3500)
+# greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
+greedy_knapsack(x = knapsack_objects[1:1200,], W = 3500)
