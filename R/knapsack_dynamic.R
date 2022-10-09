@@ -1,50 +1,57 @@
+#' dynamic_knapsack
+#'
+#' @param x A DataFrame
+#' @param W an Integer
+#'
+#' @return A list
+#' @export dynamic_knapsack
+#'
+#' @examples
+#' dynamic_knapsack(x = knapsack_objects[1:8,], W = 3500)
+#' dynamic_knapsack(x = knapsack_objects[1:12,], W = 3500)
+#' dynamic_knapsack(x = knapsack_objects[1:8,], W = 2000)
+#' dynamic_knapsack(x = knapsack_objects[1:12,], W = 2000)
 
-knapsack_dynamic <- function(x,W){
+dynamic_knapsack <- function(x,W){
+  stopifnot(is.data.frame(x))
+  stopifnot(is.numeric(W))
 
-  # # Check for inputs
-  # stopifnot(is.data.frame(x))
-  # stopifnot(c("v", "w") %in% names(x))
-  # stopifnot(is.numeric(x$w)&&is.numeric(x$v))
-  # stopifnot(any(x$w <= W) || any(x$v > 0) )
-  # stopifnot(W > 0)
+  n <- length(x$w)
+  matrixx <- matrix(nrow = n, ncol = W)
+  tempknapItems <-c()
+  allowedWeight <- W
 
-  discard <- which(x$w > W)
-  x <- x[order(x$w,decreasing = TRUE), ]
-  for (item in 1:length(discard)) {
-    print(item)
-    x <- x[-1, ]
-  }
-
-
-  main_matrix <- matrix(0, nrow=nrow(x)+1, ncol = W+1)
-  w <- x$w
-  v <- x$v
-  elements <- c()
-
-  for(i in 2:(nrow(x)+1)){
-    for(j in 1:(W+1)){
-      if(w[i-1] > j){
-        main_matrix[i,j] <- main_matrix[i-1, j] # here j is W
+  for(Columss in 1:n){
+    for(Rowss in 1:W){
+      if(Columss == 1 | Rowss == 1){
+        matrixx[Columss, Rowss] <- 0
       }
-      else{
-        main_matrix[i,j] <- max((v[i-1] + main_matrix[i-1, j-w[i-1]]), (main_matrix[i-1, j]))
+      else if(x[["w"]][Columss] > Rowss){
+        matrixx[Columss, Rowss] <- matrixx[Columss - 1, Rowss]
+      }
+      else {
+        maxVal <- max(matrixx[Columss - 1, Rowss], matrixx[Columss - 1, Rowss - x[["w"]][Columss]] + x[["v"]][Columss])
+        matrixx[Columss, Rowss] <- maxVal
       }
     }
   }
-  return(main_matrix)
+  tempValue <- matrixx[n, W]
 
-  i <- nrow(main_matrix)
-  j <- ncol(main_matrix)
-  value <- main_matrix[i , j]
-
-  while(i > 1 & j >1){
-    if(main_matrix[i,j] != main_matrix[i-1,j]){
-      elements <- c(elements, rownames(x)[i-1])
-      j <- j - x$w[i - 1]
+  for(i in n:1){
+    if(tempValue == matrixx[i - 1, allowedWeight]){
+      next
     }
-    i <- i - 1
+    else{
+      tempknapItems <- c(tempknapItems, x[["w"]][i])
+      tempValue <- tempValue - x[["v"]][i]
+      allowedWeight <- allowedWeight - x[["w"]][i]
+    }
+    if(tempValue <= 0){
+      break
+    }
   }
-
-  return (list(value = round(main_matrix[nrow(main_matrix), ncol(main_matrix)]), elements = as.numeric(sort(elements))))
+  finalElement <- which(x[["w"]] %in% tempknapItems)
+  finalresult <- list("value" = matrixx[n, W], "elements" = finalElement)
+  return(finalresult)
 }
-knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500)
+
