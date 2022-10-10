@@ -13,9 +13,19 @@ test_that("Correct object is returned", {
   expect_named(gk, c("value", "elements"))
 })
 
+test_that("Correct object is returned", {
+  expect_silent(dk <- dynamic_knapsack(x = knapsack_objects[1:8,], W = 3500))
+  expect_named(dk, c("value", "elements"))
+})
+
 test_that("functions rejects errounous input.", {
   expect_error(greedy_knapsack("hej", 3500))
   expect_error(greedy_knapsack(x = knapsack_objects[1:8,], W = -3500))
+})
+
+test_that("functions rejects errounous input.", {
+  expect_error(dynamic_knapsack("hej", 3500))
+  expect_error(dynamic_knapsack(x = knapsack_objects[1:8,], W = -3500))
 })
 
 test_that("Function return correct results.", {
@@ -85,5 +95,3 @@ test_that("Function return correct results.", {
   st <- system.time(bfk <- brute_force_knapsack(x = knapsack_objects[1:16,], W = 2000))
   expect_true(as.numeric(st)[2] >= 0.00)
 })
-
-

@@ -17,3 +17,37 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(Lab6AdvR)
 ```
+
+first i have define the dataframe here which i am gonna use later.
+
+```{r echo=TRUE}
+RNGversion(min(as.character(getRversion()),"3.5.3"))
+set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
+n <- 2000
+knapsack_objects <-
+  data.frame(
+    w=sample(1:4000, size = n, replace = TRUE),
+    v=runif(n = n, 0, 10000)
+  )
+
+```
+
+here we have to run the Bruitforce Knapsack Algorithm.
+
+```{r }
+brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
+
+```
+
+here we have to run the Greedy Knapsack Algorithm.
+
+```{r }
+greedy_knapsack(x = knapsack_objects[1:1200,], W = 3500)
+```
+
+here we have to run the Dynamic Knapsack Algorithm.
+
+```{r }
+dynamic_knapsack(x = knapsack_objects[1:12,], W = 1500)
+
+```

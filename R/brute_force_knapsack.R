@@ -56,5 +56,4 @@ brute_force_knapsack <-function(x, W){
 #     w=sample(1:4000, size = n, replace = TRUE),
 #     v=runif(n = n, 0, 10000)
 #   )
-#
-# knapsack_greedy(knapsack_objects[1:800,], 3500)
+
