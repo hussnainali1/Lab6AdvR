@@ -18,34 +18,30 @@ greedy_knapsack <- function(x, W){
   tempDataFrame <- x
   objW <- x$w
   objv <- x$v
+  finalValue <- 0
+  knapsack_value <- 0
+  Summ <- 0
   divionRes <- objv / objW
   tempDataFrame$divRes <- divionRes
 
   tempDataFrame <-  tempDataFrame[order(tempDataFrame$divRes, decreasing = TRUE),]
-  summ <- 0
-  itemVector <- c()
-  allowedWeight <- W
-  tempSumm <- 0
-  for (index in 1:nrow(tempDataFrame)) {
+  knapsack_items <- c()
+  for (i in 1:nrow(x)) {
+    Summ <- Summ + tempDataFrame[i,1]
 
-    if(allowedWeight > tempDataFrame[index,1]){
-      rn <- as.numeric(rownames(tempDataFrame[index,]))
-      summ <- summ + tempDataFrame[index,2]
-      allowedWeight <- allowedWeight - tempDataFrame[index,1]
-      # cat(paste("item=", rn , " allocated weight left ", allowedWeight, " summm = ",summ ,"\n"))
-      itemVector <- append(itemVector,rn)
-      tempSumm <- tempDataFrame[index,2]
+    if(Summ <= W){
+      finalValue <- finalValue + tempDataFrame[i,2]
     }
 
+    if(finalValue > knapsack_value){
+      knapsack_value <- finalValue
+      indexNames <- rownames(tempDataFrame)[i]
+      indexNames <- as.integer(indexNames)
+      knapsack_items <- c(knapsack_items, indexNames)
+    }
   }
-  if(length(itemVector)>4){
-    summ <- summ - tempSumm
-    itemVector <- itemVector[1:length(itemVector)-1]
-  }
-
-  return(list("value"= summ, "elements"= itemVector))
+  return(list("value"= knapsack_value, "elements"= knapsack_items))
 }
-# greedy_knapsack(x = knapsack_objects[1:12,], W = 3500)
-# greedy_knapsack(x = knapsack_objects[1:8,], W = 3500)
-# greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
-greedy_knapsack(x = knapsack_objects[1:1200,], W = 3500)
+
+
+
