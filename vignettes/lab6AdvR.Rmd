@@ -1,0 +1,19 @@
+---
+title: "lab6AdvR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab6AdvR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(Lab6AdvR)
+```
