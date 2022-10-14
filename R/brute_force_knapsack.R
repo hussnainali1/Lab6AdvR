@@ -11,49 +11,84 @@
 #' brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
 #' brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
 #' brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
-brute_force_knapsack <-function(x, W){
-    stopifnot(is.data.frame(x))
-    stopifnot(is.numeric(W))
-    stopifnot(W>0)
+brute_force_knapsack<-function(x,W, parallel=FALSE)
+{
+  stopifnot(is.data.frame(x))
+  stopifnot(is.numeric(W))
+  stopifnot(W>0)
 
-    n <- length(x$v)
-    Weights <- x$w
-    Values <- x$v
-    finalValue <- 0
-    tempVec <-rep(0,times=length(x$w))
-    for (i in 1:2^n) {
-      j <-  n
-      tempWeight <-  0
-      tempValue <-  0
-      while (tempVec[j] != 0 && j > 0){
-        tempVec[j] <-  0
-        j <-  j - 1
-      }
-      tempVec[j] <-  1
-      for (k in 1:n) {
-        if (tempVec[k] == 1){
-          tempWeight <-  tempWeight + Weights[k]
-          tempValue <-  tempValue + Values[k]
+  endRes = list()
+  n<-length(x$v)
+  value<-0
+  elements<-c()
+  tempMaximum<-0
+  if (!parallel)
+  {
+    lapply(1:n, function(i)
+    {
+      macComb <-utils::combn(n,i)
+      pp<-1
+      while(pp <= ncol(macComb))
+      {
+        if(sum(x$w[macComb[,pp]]) <= W)
+        {
+          value<-sum(x$v[macComb[,pp]])
+          if(value > tempMaximum)
+          {
+            tempMaximum <<- value
+            elements <<- macComb[,pp]
+          }
         }
+        pp<-pp+1
       }
-
-      if ((tempValue > finalValue) && (tempWeight <=  W)){
-        finalValue <-  tempValue
-        bestWeight <-  tempWeight
-        nodes <-  tempVec
-      }
-    }
-    nodes <- which(nodes==1,  arr.ind = TRUE)
-    return (list("value"=finalValue, "elements"=nodes))
+    })
+    endRes<-list(value=round(tempMaximum),elements=elements)
   }
 
+  else
+  {
+    nodes <- parallel::makeCluster(parallel::detectCores()/2)
+    parallel::clusterExport(nodes, varlist=c("x","W","n","value","tempMaximum","elements"), envir=environment())
+    parallel::clusterEvalQ(nodes, library(utils))
+    Value <- parallel::parLapply(nodes, 1:n, function(i, x, W) {
+      macComb <- utils::combn(n,i)
+      pp <- 1
+      while(pp<=ncol(macComb))
+      {
+        if(sum(x$w[macComb[,pp]]) <= W)
+        {
+          value<-sum(x$v[macComb[,pp]])
+          if(tempMaximum<value)
+          {
+            elements<-macComb[,pp]
+            tempMaximum<-value
+          }
+        }
+        pp <- pp+1
+      }
 
-# RNGversion(min(as.character(getRversion()),"3.5.3"))
-# set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
-# n <- 2000
-# knapsack_objects <-
-#   data.frame(
-#     w=sample(1:4000, size = n, replace = TRUE),
-#     v=runif(n = n, 0, 10000)
-#   )
+      return(list(value=round(tempMaximum), elements = elements))
+
+    }, x, W )
+
+    qq=1
+    while(Value[[qq]]["value"]!=0)
+    {
+      elements<-Value[[qq]]["elements"]
+      value<-Value[[qq]]["value"]
+      qq<-qq+1
+    }
+    endRes= c(value,elements)
+    parallel::stopCluster(nodes)
+  }
+
+  return (endRes)
+}
+
+
+brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel = FALSE)
+
+
+
+
 
