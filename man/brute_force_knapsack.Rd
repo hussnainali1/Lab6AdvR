@@ -4,12 +4,14 @@
 \alias{brute_force_knapsack}
 \title{brute_force_knapsack}
 \usage{
-brute_force_knapsack(x, W)
+brute_force_knapsack(x, W, parallel = FALSE)
 }
 \arguments{
 \item{x}{A DataFrame}
 
 \item{W}{an Integer}
+
+\item{parallel}{A Boolean}
 }
 \value{
 A list
@@ -18,7 +20,7 @@ A list
 brute_force_knapsack
 }
 \examples{
-brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
+brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel = FALSE)
 brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
 brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
 brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)

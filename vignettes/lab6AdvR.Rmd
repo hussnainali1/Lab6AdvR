@@ -39,6 +39,14 @@ brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
 
 ```
 
+How much time does it takes to run the algorithm for n = 16 objects?
+```{r }
+ "using 2 cores on Mac"
+ "parallel=FALSE => 0.013"
+ "parallel=TRUE => 0.488"
+```
+
+
 here we have to run the Greedy Knapsack Algorithm.
 
 ```{r }

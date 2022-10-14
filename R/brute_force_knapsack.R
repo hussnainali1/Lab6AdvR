@@ -46,9 +46,9 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
     endRes<-list(value=round(tempMaximum),elements=elements)
   }
 
-  else
+  else if (parallel)
   {
-    nodes <- parallel::makeCluster(parallel::detectCores()/2)
+    nodes <- parallel::makeCluster(parallel::detectCores()/4)
     parallel::clusterExport(nodes, varlist=c("x","W","n","value","tempMaximum","elements"), envir=environment())
     parallel::clusterEvalQ(nodes, library(utils))
     Value <- parallel::parLapply(nodes, 1:n, function(i, x, W) {
@@ -86,8 +86,16 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
   return (endRes)
 }
 
+# system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=FALSE))
 
-
+# RNGversion(min(as.character(getRversion()),"3.5.3"))
+# set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
+# n <- 16
+# knapsack_objects <-
+#   data.frame(
+#     w=sample(1:4000, size = n, replace = TRUE),
+#     v=runif(n = n, 0, 10000)
+#   )
 
 
 
