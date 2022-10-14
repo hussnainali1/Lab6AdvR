@@ -2,12 +2,13 @@
 #'
 #' @param x A DataFrame
 #' @param W an Integer
+#' @param parallel A Boolean
 #'
 #' @return A list
 #' @export brute_force_knapsack
 #'
 #' @examples
-#' brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
+#'brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel = FALSE)
 #' brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
 #' brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
 #' brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
@@ -86,7 +87,6 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
 }
 
 
-brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel = FALSE)
 
 
 
