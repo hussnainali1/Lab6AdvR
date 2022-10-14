@@ -31,8 +31,7 @@ dynamic_knapsack <- function(x,W){
         matrixx[Columss, Rowss] <- matrixx[Columss - 1, Rowss]
       }
       else {
-        maxVal <- max(matrixx[Columss - 1, Rowss], matrixx[Columss - 1, Rowss - x[["w"]][Columss]] + x[["v"]][Columss])
-        matrixx[Columss, Rowss] <- maxVal
+        matrixx[Columss, Rowss] <- max(matrixx[Columss - 1, Rowss], matrixx[Columss - 1, Rowss - x[["w"]][Columss]] + x[["v"]][Columss])
       }
     }
   }
@@ -51,10 +50,15 @@ dynamic_knapsack <- function(x,W){
       break
     }
   }
-  finalElement <- which(x[["w"]] %in% tempknapItems)
-  finalresult <- list("value" = matrixx[n, W], "elements" = finalElement)
+  finalresult <- list("value" = matrixx[n, W], "elements" = which(x[["w"]] %in% tempknapItems))
   return(finalresult)
 }
 
-
-
+# RNGversion(min(as.character(getRversion()),"3.5.3"))
+# set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
+# n <- 2000
+# knapsack_objects <-
+#   data.frame(
+#     w=sample(1:4000, size = n, replace = TRUE),
+#     v=runif(n = n, 0, 10000)
+#   )
