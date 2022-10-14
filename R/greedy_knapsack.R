@@ -43,5 +43,15 @@ greedy_knapsack <- function(x, W){
   return(list("value"= knapsack_value, "elements"= knapsack_items))
 }
 
+system.time(greedy_knapsack(x = knapsack_objects[1:800,], W = 3500))
+
+# RNGversion(min(as.character(getRversion()),"3.5.3"))
+# set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
+# n <- 1000000
+# knapsack_objects <-
+#   data.frame(
+#     w=sample(1:4000, size = n, replace = TRUE),
+#     v=runif(n = n, 0, 10000)
+#   )
 
 

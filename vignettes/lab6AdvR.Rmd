@@ -53,9 +53,21 @@ here we have to run the Greedy Knapsack Algorithm.
 greedy_knapsack(x = knapsack_objects[1:1200,], W = 3500)
 ```
 
+How much time does it takes to run the algorithm for n = 500 objects?
+```{r }
+ "time taken - 0.2 sec"
+```
+
+
 here we have to run the Dynamic Knapsack Algorithm.
 
 ```{r }
 dynamic_knapsack(x = knapsack_objects[1:12,], W = 1500)
 
+```
+
+
+How much time does it takes to run the algorithm for n = 1000000 objects?
+```{r }
+ "time taken - 0.02765918 sec"
 ```

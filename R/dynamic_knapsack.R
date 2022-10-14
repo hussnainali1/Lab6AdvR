@@ -53,10 +53,11 @@ dynamic_knapsack <- function(x,W){
   finalresult <- list("value" = matrixx[n, W], "elements" = which(x[["w"]] %in% tempknapItems))
   return(finalresult)
 }
+# system.time (dynamic_knapsack(x = knapsack_objects[1:12,], W = 3500))
 
 # RNGversion(min(as.character(getRversion()),"3.5.3"))
 # set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
-# n <- 2000
+# n <- 500
 # knapsack_objects <-
 #   data.frame(
 #     w=sample(1:4000, size = n, replace = TRUE),
