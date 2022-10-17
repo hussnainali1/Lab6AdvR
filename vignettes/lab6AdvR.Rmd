@@ -31,8 +31,18 @@ knapsack_objects <-
   )
 
 ```
+Tested on Mac, using 8/2 = 4 cores. Machine had 8 cores in total.
 
-here we have to run the Bruitforce Knapsack Algorithm.
+```{r }
+"Using (parallel= TRUE): 0.007"
+"Using (parallel= FALSE): 0.014"
+
+```
+
+What performance gain could you get by parallelizing brute force search?
+```{r }
+"Almost 2x increase in speed: (0.014/0.007 = 2)"
+```
 
 ```{r }
 brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
