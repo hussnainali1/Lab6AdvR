@@ -3,7 +3,7 @@ Title: Knapsack Prblem Solution
 Version: 0.0.0.9000
 Authors@R: c( person("hussnain", "ali", , "hussnainkhilgi1@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID")), 
-            person("Atta", "Khan", , "attaullahkhan.comsats@gmail.com", role = "ctb",
+            person("Atta Ullah", "Khan", , "attaullahkhan.comsats@gmail.com", role = "ctb",
            comment = c(ORCID = "YOUR-ORCID-ID"))
            )
 Description: What the package does (one paragraph).
